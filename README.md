@@ -1,6 +1,20 @@
 # PHP-Fox Framework
 
-This is the repository for the PHP-Fox framework.
+<!-- BADGES_START -->
+[![Latest Version][badge-release]][packagist]
+[![PHP Version][badge-php]][php]
+![tests](https://github.com/PHP-Fox/framework/workflows/run-tests/badge.svg)
+
+[badge-release]: https://img.shields.io/packagist/v/phpfox/framework.svg?style=flat-square&label=release
+[badge-php]: https://img.shields.io/packagist/php-v/phpfox/framework.svg?style=flat-square
+[badge-downloads]: https://img.shields.io/packagist/dt/phpfox/framework.svg?style=flat-square&colorB=mediumvioletred
+
+[packagist]: https://packagist.org/packages/phpfox/framework
+[php]: https://php.net
+[downloads]: https://packagist.org/packages/phpfox/framework
+<!-- BADGES_END -->
+
+This is the repository for the PHP-Fox framework, a simple and lightweight PHP micro-framework designed for APIs.
 
 
 ## Installation
