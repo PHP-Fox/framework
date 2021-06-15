@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+    - name: Report a bug
+      url: https://github.com/PHP-Fox/framework/issues/new
+      about: Report a reproducable bug
