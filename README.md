@@ -39,5 +39,9 @@ $app = Application::boot(
     basePath: __DIR__ . '/../', // root directory of project
 );
 
+// Routes are preloaded
+// Config is preloaded
+// Container definitions are preloaded
+
 $app->run();
 ```
