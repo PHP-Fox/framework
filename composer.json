@@ -24,10 +24,13 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^8.0"
+        "php": "^8.0",
+        "juststeveking/config": "^2.0",
+        "minicli/minicli": "^2.2"
     },
     "require-dev": {
         "pestphp/pest": "^1.4",
+        "spatie/ray": "^1.26",
         "vimeo/psalm": "^4.7"
     },
     "scripts": {
