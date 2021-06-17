@@ -11,6 +11,7 @@ use Minicli\Command\CommandController;
 use Minicli\Output\OutputHandler;
 use PHPFox\Parsers\OpenApiParser;
 use RuntimeException;
+use Symfony\Component\VarExporter\VarExporter;
 use Throwable;
 
 class DefaultController extends CommandController
@@ -46,6 +47,10 @@ class DefaultController extends CommandController
         );
     }
 
+    /**
+     * @throws \League\Flysystem\FilesystemException
+     * @throws \Symfony\Component\VarExporter\Exception\ExceptionInterface
+     */
     protected function syncRoutes(array $routes, OutputHandler $printer): void
     {
         $total = count($routes);
@@ -90,9 +95,9 @@ class DefaultController extends CommandController
             location: '/stubs/api.stub',
         );
 
-//        $contents = str_replace('DummyArray', print_r($routes), $stub);
-//        echo $contents;
-//        ray($exists);
+        $contents = strtr($stub, ['DummyArray' => VarExporter::export($routes)]);
+
+        file_put_contents('testing-routes-file.php', $contents);
     }
 
     protected function setFile(): void
