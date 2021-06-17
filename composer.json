@@ -30,6 +30,7 @@
         "laminas/laminas-httphandlerrunner": "^1.4",
         "league/flysystem": "^2.1",
         "minicli/minicli": "^2.2",
+        "symfony/var-exporter": "^5.3",
         "phpfox/container": "^0.2.0",
         "phpfox/router": "0.0.2",
         "symfony/yaml": "^5.3"
