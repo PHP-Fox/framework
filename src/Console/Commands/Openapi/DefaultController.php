@@ -90,6 +90,10 @@ class DefaultController extends CommandController
             );
         }
 
+        $currentRoutes = require BASE_PATH . '/routes/api.php';
+
+        $routes = array_merge($routes, $currentRoutes);
+
         // write routes to file.
         $stub = $filesystem->read(
             location: '/stubs/api.stub',
@@ -97,7 +101,13 @@ class DefaultController extends CommandController
 
         $contents = strtr($stub, ['DummyArray' => VarExporter::export($routes)]);
 
-        file_put_contents('testing-routes-file.php', $contents);
+        /**
+         * @todo Overwrite file contents instead of prepending.
+         */
+        $filesystem->write(
+            location: '/routes/api.php',
+            contents: $contents,
+        );
     }
 
     protected function setFile(): void

@@ -25,6 +25,8 @@ class OpenApiParser
                         'method' => $verb,
                         'route' => $key,
                         'name' => $item['operationId'] ?? null,
+                        'handler' => '',
+                        'middleware' => [],
                     ];
                 }
             }
