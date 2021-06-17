@@ -5,7 +5,13 @@ declare(strict_types=1);
 namespace PHPFox;
 
 use JustSteveKing\Config\Repository;
+use Laminas\Diactoros\ResponseFactory;
+use Laminas\Diactoros\ServerRequestFactory;
+use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
+use League\Route\Strategy\JsonStrategy;
+use PHPFox\Container\Container;
 use PHPFox\Exceptions\ConfigLoadingException;
+use PHPFox\Router\Factory\RouterFactory;
 
 class Application
 {
@@ -15,6 +21,7 @@ class Application
 
     private function __construct(
         private string $basePath,
+        private Container $container,
         private bool $booted = false,
     ) {}
 
@@ -23,6 +30,7 @@ class Application
         if (! isset(static::$instance)) {
             static::$instance = new static(
                 basePath: $basePath,
+                container: Container::getInstance(),
             );
         }
 
@@ -30,6 +38,7 @@ class Application
 
         // load all the things
         $app->loadConfig();
+        $app->buildContainer();
 
         $app->booted = true;
 
@@ -61,6 +70,19 @@ class Application
         );
     }
 
+    public function buildContainer(): void
+    {
+        /**
+         * @var Container
+         */
+        $container = $this->container();
+
+        $container->bind(
+            abstract: 'emitter',
+            concrete: SapiEmitter::class,
+        );
+    }
+
     public function basePath(): string
     {
         return $this->basePath;
@@ -71,11 +93,49 @@ class Application
         return $this->config;
     }
 
+    public function container(): Container
+    {
+        return $this->container;
+    }
+
     public function isBooted(): bool
     {
         return $this->booted;
     }
 
     public function run(): void
-    {}
+    {
+        $router = RouterFactory::build();
+        $router->setStrategy(
+            strategy: new JsonStrategy(
+                responseFactory: new ResponseFactory(),
+            ),
+        );
+        // parse routes.
+
+        $request = ServerRequestFactory::fromGlobals(
+            server: $_SERVER,
+            files: $_FILES,
+            body: $_POST,
+            cookies: $_COOKIE,
+            query: $_GET,
+        );
+
+        // application middleware
+
+        $response = $router->dispatch(
+            request: $request,
+        );
+
+        /**
+         * @var SapiEmitter
+         */
+        $emitter = $this->container()->make(
+            abstract: 'emitter',
+        );
+
+        $emitter->emit(
+            response: $response,
+        );
+    }
 }

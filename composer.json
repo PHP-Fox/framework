@@ -26,9 +26,12 @@
     "require": {
         "php": "^8.0",
         "juststeveking/config": "^2.0",
+        "laminas/laminas-diactoros": "^2.6",
+        "laminas/laminas-httphandlerrunner": "^1.4",
         "league/flysystem": "^2.1",
         "minicli/minicli": "^2.2",
-        "phpfox/container": "0.2.0",
+        "phpfox/container": "^0.2.0",
+        "phpfox/router": "0.0.2",
         "symfony/yaml": "^5.3"
     },
     "require-dev": {
