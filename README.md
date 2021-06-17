@@ -45,6 +45,3 @@ $app = Application::boot(
 
 $app->run();
 ```
-
-
-Container implementation from [example repo](https://github.com/jessarcher/service-container-from-scratch) by [Jess Archer](https://github.com/jessarcher), this will be refactored and extended later, but provides us a great base. 

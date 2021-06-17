@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2acce9108ea0c8e0d949948678152801",
+    "content-hash": "05ae7b1e42d62c0abdf2f5623b0b54aa",
     "packages": [
         {
             "name": "juststeveking/config",
@@ -112,6 +112,58 @@
                 }
             ],
             "time": "2021-05-08T15:36:01+00:00"
+        },
+        {
+            "name": "phpfox/container",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PHP-Fox/container.git",
+                "reference": "3b229a22371e2b5aa08140aa1c55ca64a98373bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PHP-Fox/container/zipball/3b229a22371e2b5aa08140aa1c55ca64a98373bc",
+                "reference": "3b229a22371e2b5aa08140aa1c55ca64a98373bc",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "pestphp/pest": "^1.4",
+                "vimeo/psalm": "^4.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PHPFox\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Steve McDougall",
+                    "email": "juststevemcd@gmail.com",
+                    "homepage": "https://www.juststeveking.uk/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple DI container for the PHPFox framework",
+            "support": {
+                "issues": "https://github.com/PHP-Fox/container/issues",
+                "source": "https://github.com/PHP-Fox/container/tree/0.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/JustSteveKing",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-06-17T08:11:55+00:00"
         }
     ],
     "packages-dev": [
