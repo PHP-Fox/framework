@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PHPFox;
 
 use JustSteveKing\Config\Repository;
-use PHPFox\Support\Exceptions\ConfigLoadingException;
+use PHPFox\Exceptions\ConfigLoadingException;
 
 class Application
 {

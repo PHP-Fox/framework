@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPFox\Support\Exceptions;
+namespace PHPFox\Exceptions;
 
 use Exception;
 

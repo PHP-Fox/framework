@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f5cc6d7da2a72c1139e1384519d9c7d0",
+    "content-hash": "cc2e30be7e1775f51f9d0ca454e9bd6c",
     "packages": [
         {
             "name": "juststeveking/config",

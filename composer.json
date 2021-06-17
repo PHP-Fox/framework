@@ -30,7 +30,7 @@
         "phpfox/container": "0.2.0"
     },
     "require-dev": {
-        "pestphp/pest": "^1.4",
+        "pestphp/pest": "^1.5",
         "spatie/ray": "^1.26",
         "vimeo/psalm": "^4.7"
     },
