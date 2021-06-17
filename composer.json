@@ -27,7 +27,7 @@
         "php": "^8.0",
         "juststeveking/config": "^2.0",
         "minicli/minicli": "^2.2",
-        "phpfox/container": "^0.1.0"
+        "phpfox/container": "0.2.0"
     },
     "require-dev": {
         "pestphp/pest": "^1.4",
