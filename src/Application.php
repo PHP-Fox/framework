@@ -4,20 +4,26 @@ declare(strict_types=1);
 
 namespace PHPFox;
 
+use Closure;
 use JustSteveKing\Config\Repository;
+use Laminas\Diactoros\Response;
 use Laminas\Diactoros\ResponseFactory;
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
+use League\Route\Router;
 use League\Route\Strategy\JsonStrategy;
 use PHPFox\Container\Container;
 use PHPFox\Exceptions\ConfigLoadingException;
 use PHPFox\Router\Factory\RouterFactory;
+use Throwable;
 
 class Application
 {
     private static Application $instance;
 
     private Repository $config;
+
+    private Router $router;
 
     private function __construct(
         private string $basePath,
@@ -37,7 +43,15 @@ class Application
         $app = static::$instance;
 
         // load all the things
+        $app->router = RouterFactory::build();
+        $app->router->setStrategy(
+            strategy: new JsonStrategy(
+                responseFactory: new ResponseFactory(),
+            ),
+        );
+
         $app->loadConfig();
+        $app->loadRoutes();
         $app->buildContainer();
 
         $app->booted = true;
@@ -68,6 +82,37 @@ class Application
         $this->config = Repository::build(
             items: $config,
         );
+    }
+
+    public function loadRoutes(): void
+    {
+        $routes = require $this->basePath . 'routes/api.php';
+
+        array_map(function ($route) {
+            $this->map(
+                method: $route['method'],
+                path: $route['route'],
+                handler: $route['handler'],
+                middleware: $route['middleware']
+            );
+        }, $routes);
+    }
+
+    public function map(string $method, string $path, Closure|string $handler, array $middleware = []): void
+    {
+        $route = $this->router->map(
+            method: strtoupper($method),
+            path: $path,
+            handler: $handler,
+        );
+
+        if (! empty($middleware)) {
+            foreach ($middleware as $callable) {
+                $route->middleware(
+                    middleware: $callable,
+                );
+            }
+        }
     }
 
     public function buildContainer(): void
@@ -105,14 +150,6 @@ class Application
 
     public function run(): void
     {
-        $router = RouterFactory::build();
-        $router->setStrategy(
-            strategy: new JsonStrategy(
-                responseFactory: new ResponseFactory(),
-            ),
-        );
-        // parse routes.
-
         $request = ServerRequestFactory::fromGlobals(
             server: $_SERVER,
             files: $_FILES,
@@ -123,9 +160,27 @@ class Application
 
         // application middleware
 
-        $response = $router->dispatch(
-            request: $request,
-        );
+        try {
+            $response = $this->router->dispatch(
+                request: $request,
+            );
+        } catch (Throwable $exception) {
+            $response = new Response();
+            $response->withAddedHeader(
+                header: 'Content-Type',
+                value: 'application/api.problem+json'
+            );
+            $response->getBody()->write(
+                string: json_encode([
+                    'code' => $exception->getCode(),
+                    'message' => $exception->getMessage(),
+                ]),
+            );
+            $response->withStatus(
+                code: 500,
+            );
+        }
+
 
         /**
          * @var SapiEmitter
